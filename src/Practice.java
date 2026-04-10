@@ -185,6 +185,23 @@ public class Practice {
    * @throws NullPointerException if either start or end is null.
    */
   public boolean hasStrictlyIncreasingPath(Vertex<Integer> start, Vertex<Integer> end) {
+    if (start == null || end == null) throw new NullPointerException();
+
+    return hasStrictlyIncreasingPath(start, end, new HashSet<>());
+  }
+
+  private boolean hasStrictlyIncreasingPath(Vertex<Integer> start, Vertex<Integer> end, HashSet<Vertex<Integer>> seen) {
+    if (start == null) return false;
+    if (start == end) return true;
+    seen.add(start);
+    if (start.neighbors == null || start.neighbors.isEmpty()) return false;
+    for (Vertex<Integer> neighbor: start.neighbors) {
+      if (neighbor.data > start.data) {
+        if (hasStrictlyIncreasingPath(neighbor, end, seen)) {
+          return true;
+        }
+      }
+    }
     return false;
   }
 }
