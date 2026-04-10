@@ -143,6 +143,30 @@ public class Practice {
    * @return true if all reachable vertices hold odd values, false otherwise
    */
   public boolean allOdd(Vertex<Integer> vertex) {
+    if (vertex == null) return true;
+
+    return allOdd(vertex, new HashSet<>());
+  }
+
+  public boolean allOdd(Vertex<Integer> vertex, HashSet<Vertex<Integer>> seen) {
+    if (vertex == null) return true;
+    if (seen.contains(vertex)) return true;
+    if (vertex.data % 2 != 1) {
+      return false;
+    }
+
+    seen.add(vertex);
+
+    if (vertex.neighbors == null || vertex.neighbors.isEmpty()) {
+      return true;
+    }
+
+    for (Vertex<Integer> neighbor : vertex.neighbors) {
+      if (!allOdd(neighbor)) {
+        return false;
+      }
+    }
+  
     return true;
   }
 
